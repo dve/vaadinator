@@ -77,25 +77,28 @@ public abstract class ${bean.className}EditViewImpl<O extends ${bean.className}E
 	
 	@Override
 	public void initializeUi() {
-
-		buttonLayout.setSpacing(true);
 		initButtons();
 
 #parse("/de/akquinet/engineering/vaadinator/templates/EditViewImpl_control.template")
+		
+		buildLayout();	
+		setCompositionRoot(mainLayout);
+		addStyleName("styleid-${bean.className}EditViewImpl");
+	}
 
+	@Override
+	public void buildLayout() {
+		buttonLayout.setSpacing(true);
 		editLayout.setMargin(true);
 		editLayout.setSizeFull();
-		
 #foreach($property in $bean.getDisplayProfile($profileName).propertiesInProfile)
 #if($property.getDisplayPropertyProfile($profileName).showInDetail && $property.getDisplayPropertyProfile($profileName).readOnly==false)
 		editLayout.addComponent(${property.propertyName});
 #end
 #end		
-		
 		mainLayout.addComponent(buttonLayout);
 		mainLayout.addComponent(editLayout);
-		setCompositionRoot(mainLayout);
-		addStyleName("styleid-${bean.className}EditViewImpl");
+
 	}
 
 	@Override

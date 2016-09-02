@@ -79,11 +79,17 @@ public abstract class ${bean.className}EditViewImpl<O extends ${bean.className}E
 	public void initializeUi() {
 #parse("/de/akquinet/engineering/vaadinator/templates/EditViewImpl_section.template")
 #parse("/de/akquinet/engineering/vaadinator/templates/EditViewImpl_control.template")
+		buildLayout();
 		setContent(layout);
 		initButtons();
 		addStyleName("styleid-${bean.className}EditViewImpl");
 	}    
-
+	
+	@Override
+	public void buildLayout() {
+		// TODO use in default touchkit templates
+	}
+	
     @Override
 	public void beforeValidation() {
 	}
