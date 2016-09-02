@@ -15,6 +15,8 @@
  */
 package de.akquinet.engineering.vaadinator.timesheet.ui.std.view;
 
+import java.util.Map;
+
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -30,8 +32,8 @@ public class TimesheetDayChangeViewImplEx extends TimesheetDayChangeViewImpl imp
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TimesheetDayChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public TimesheetDayChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	private int day = 0;

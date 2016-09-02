@@ -16,8 +16,8 @@ public abstract class ContractApplicationEditViewImplEx<O extends ContractApplic
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ContractApplicationEditViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public ContractApplicationEditViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	@Override

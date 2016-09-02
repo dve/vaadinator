@@ -19,7 +19,7 @@ the License.
 
 	@Override
 	public MainView createMainView() {
-		return new MainViewImpl();
+		return new MainViewImpl(context);
 	}
 
 	@Override

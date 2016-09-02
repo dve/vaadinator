@@ -16,6 +16,7 @@
 package de.akquinet.engineering.vaadinator.example.contractapplication;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -64,6 +65,7 @@ public class ContractApplicationExampleUI extends UI {
 	}
 
 	PresenterFactory presenterFactory = null;
+	private Map<String, Object> context = new HashMap<String, Object>();
 
 	protected PresenterFactory obtainPresenterFactory(String contextPath) {
 		if (presenterFactory == null) {
@@ -71,7 +73,7 @@ public class ContractApplicationExampleUI extends UI {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ContractApplicationExample");
 			ContractApplicationDao contractApplicationDao = new ContractApplicationDaoPlain(entityManagerFactory);
 			contractApplicationService = new ContractApplicationServicePlain(entityManagerFactory, contractApplicationDao);
-			presenterFactory = new PresenterFactory(new HashMap<String, Object>(), new VaadinViewFactoryEx(), contractApplicationService);
+			presenterFactory = new PresenterFactory(context, new VaadinViewFactoryEx(context), contractApplicationService);
 		}
 		return presenterFactory;
 	}

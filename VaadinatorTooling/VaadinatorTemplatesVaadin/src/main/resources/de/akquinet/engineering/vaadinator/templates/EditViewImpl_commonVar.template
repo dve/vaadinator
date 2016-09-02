@@ -18,3 +18,5 @@ the License.
 	protected ExceptionMappingStrategy exceptionMappingStrategy = null;
 	
 	private Set<FieldInitializer> fieldInitializers = new HashSet<FieldInitializer>();
+	
+	protected Map<String, Object> context;

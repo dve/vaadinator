@@ -15,11 +15,17 @@
  */
 package de.akquinet.engineering.vaadinator.example.contractapplication.ui.std.view;
 
+import java.util.Map;
+
 public class VaadinViewFactoryEx extends VaadinViewFactory {
+
+	public VaadinViewFactoryEx(Map<String, Object> context) {
+		super(context);
+	}
 
 	@Override
 	public FirstPageView createFirstPageView() {
-		return new FirstPageViewImplEx(exceptionMappingStrategy);
+		return new FirstPageViewImplEx(exceptionMappingStrategy, context);
 	}
 
 }

@@ -15,6 +15,8 @@
  */
 package de.akquinet.engineering.vaadinator.timesheet.ui.std.view;
 
+import java.util.Map;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 
@@ -28,8 +30,8 @@ public class TimesheetDayEntryChangeViewImplEx extends TimesheetDayEntryChangeVi
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TimesheetDayEntryChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public TimesheetDayEntryChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	private TimesheetDayEntryChangeViewEx.Observer observer = null;

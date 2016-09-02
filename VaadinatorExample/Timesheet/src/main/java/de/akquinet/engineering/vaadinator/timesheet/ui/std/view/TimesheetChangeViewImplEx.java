@@ -32,8 +32,8 @@ public class TimesheetChangeViewImplEx extends TimesheetChangeViewImpl implement
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TimesheetChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public TimesheetChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	private Map<String, Label> projectSumLabels = new HashMap<String, Label>();

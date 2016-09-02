@@ -80,7 +80,7 @@ public class TimesheetUI extends UI implements TimesheetContextConstants {
 		if (presenterFactory == null) {
 			// simple, overwrite method for e.g. Spring / CDI / ...
 			// Entity-Manager NUR Thread-Safe, wenn er injected wird wie hier
-			presenterFactory = new PresenterFactoryEx(context, new VaadinViewFactory(), new CouchDbProjectService(), new CouchDbTimesheetService(), null,
+			presenterFactory = new PresenterFactoryEx(context, new VaadinViewFactory(context), new CouchDbProjectService(), new CouchDbTimesheetService(), null,
 					null);
 		}
 		return presenterFactory;

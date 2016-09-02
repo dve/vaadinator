@@ -17,6 +17,8 @@ package ${package};
 
 #parse("/de/akquinet/engineering/vaadinator/templates/bundle_includes.template")
 
+import java.util.Map;
+
 import ${common.basePackage}.ui.view.View;
 import ${common.basePackage}.ui.view.ExceptionMappingStrategy;
 
@@ -51,9 +53,12 @@ public class FirstPageViewImpl extends NavigationView implements FirstPageView {
 
 	protected ExceptionMappingStrategy exceptionMappingStrategy = null;
 
-	public FirstPageViewImpl(ExceptionMappingStrategy exceptionMappingStrategy) {
+	protected Map<String, Object> context = null;
+	
+	public FirstPageViewImpl(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
  		super();
 		this.exceptionMappingStrategy = exceptionMappingStrategy;
+		this.context = context;
  	}
 
 #parse("/de/akquinet/engineering/vaadinator/templates/bundle_obtain.template")

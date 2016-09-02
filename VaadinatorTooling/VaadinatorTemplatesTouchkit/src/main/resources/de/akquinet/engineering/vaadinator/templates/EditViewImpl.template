@@ -70,9 +70,10 @@ public abstract class ${bean.className}EditViewImpl<O extends ${bean.className}E
 #parse("/de/akquinet/engineering/vaadinator/templates/EditViewImpl_sectionvar.template")
 #parse("/de/akquinet/engineering/vaadinator/templates/EditViewImpl_controlvar.template")
 
-	public ${bean.className}EditViewImpl(ExceptionMappingStrategy exceptionMappingStrategy) {
+	public ${bean.className}EditViewImpl(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
     	super();
 		this.exceptionMappingStrategy = exceptionMappingStrategy;
+		this.context = context;
 	}
 
 	@Override

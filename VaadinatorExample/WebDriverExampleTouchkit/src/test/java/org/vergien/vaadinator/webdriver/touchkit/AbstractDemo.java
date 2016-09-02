@@ -16,6 +16,7 @@
 package org.vergien.vaadinator.webdriver.touchkit;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -39,6 +40,8 @@ public abstract class AbstractDemo extends AbstractTest {
 
 	PresenterFactory presenterFactory = null;
 
+	Map<String, Object> context = new HashMap<String, Object>();
+	
 	abstract Presenter getPresenter();
 
 	@Override
@@ -64,7 +67,7 @@ public abstract class AbstractDemo extends AbstractTest {
 			AddressDaoPlain addressDaoPlain = new AddressDaoPlain(entityManagerFactory);
 			addressService = new AddressServicePlain(entityManagerFactory, addressDaoPlain);
 
-			presenterFactory = new PresenterFactory(new HashMap<String, Object>(), new VaadinViewFactory(),
+			presenterFactory = new PresenterFactory(context, new VaadinViewFactory(context),
 					addressService);
 		}
 		return presenterFactory;

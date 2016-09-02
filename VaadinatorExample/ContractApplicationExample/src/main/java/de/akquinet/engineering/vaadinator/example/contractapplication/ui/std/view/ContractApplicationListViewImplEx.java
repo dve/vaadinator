@@ -15,6 +15,8 @@
  */
 package de.akquinet.engineering.vaadinator.example.contractapplication.ui.std.view;
 
+import java.util.Map;
+
 import de.akquinet.engineering.vaadinator.example.contractapplication.ui.view.ExceptionMappingStrategy;
 
 public class ContractApplicationListViewImplEx extends ContractApplicationListViewImpl {
@@ -24,8 +26,8 @@ public class ContractApplicationListViewImplEx extends ContractApplicationListVi
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ContractApplicationListViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public ContractApplicationListViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	@Override

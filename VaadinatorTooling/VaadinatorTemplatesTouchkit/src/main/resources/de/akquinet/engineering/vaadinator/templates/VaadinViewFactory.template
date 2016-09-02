@@ -24,7 +24,7 @@ the License.
 
 	@Override
 	public FirstPageView createFirstPageView() {
-		return new FirstPageViewImpl(exceptionMappingStrategy);
+		return new FirstPageViewImpl(exceptionMappingStrategy, context);
 	}
 
 }

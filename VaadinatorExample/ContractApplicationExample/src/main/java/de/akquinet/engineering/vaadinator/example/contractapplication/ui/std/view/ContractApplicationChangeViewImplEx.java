@@ -17,10 +17,6 @@ package de.akquinet.engineering.vaadinator.example.contractapplication.ui.std.vi
 
 import java.util.Map;
 
-import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.Notification;
-
 import de.akquinet.engineering.vaadinator.example.contractapplication.ui.view.ExceptionMappingStrategy;
 
 
@@ -31,8 +27,8 @@ public class ContractApplicationChangeViewImplEx extends ContractApplicationChan
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ContractApplicationChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public ContractApplicationChangeViewImplEx(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	@Override

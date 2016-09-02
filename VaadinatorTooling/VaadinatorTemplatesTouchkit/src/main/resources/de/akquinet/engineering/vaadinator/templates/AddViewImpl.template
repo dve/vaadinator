@@ -15,6 +15,8 @@ the License.
 *#
 package ${package};
 
+import java.util.Map;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -39,8 +41,8 @@ public class ${bean.className}AddViewImpl extends
 	protected Button cancel = new Button();
 	protected Button save = new Button();
 
-	public ${bean.className}AddViewImpl(ExceptionMappingStrategy exceptionMappingStrategy) {
-		super(exceptionMappingStrategy);
+	public ${bean.className}AddViewImpl(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
+		super(exceptionMappingStrategy, context);
 	}
 
 	@Override

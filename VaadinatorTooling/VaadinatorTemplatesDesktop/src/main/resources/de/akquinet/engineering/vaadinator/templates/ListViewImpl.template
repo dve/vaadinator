@@ -17,6 +17,7 @@ package ${package};
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ${common.basePackage}.ui.view.View;
 import ${common.basePackage}.ui.view.ExceptionMappingStrategy;
@@ -59,12 +60,14 @@ public class ${bean.className}ListViewImpl extends CustomComponent implements ${
 	protected TextField searchField = new TextField();
 	protected Button add${bean.className} = new Button();
     protected ExceptionMappingStrategy exceptionMappingStrategy = null;
+    protected Map<String, Object> context = null;
     
 	private ${bean.className}ListView.Observer observer;
 
-	public ${bean.className}ListViewImpl(ExceptionMappingStrategy exceptionMappingStrategy) {
+	public ${bean.className}ListViewImpl(ExceptionMappingStrategy exceptionMappingStrategy, Map<String, Object> context) {
 		super();
 		this.exceptionMappingStrategy = exceptionMappingStrategy;
+		this.context = context;
 	}
 
 #parse("/de/akquinet/engineering/vaadinator/templates/bundle_obtain.template")

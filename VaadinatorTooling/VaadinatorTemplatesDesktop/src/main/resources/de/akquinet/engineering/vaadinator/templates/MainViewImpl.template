@@ -39,8 +39,11 @@ public class MainViewImpl extends CustomComponent implements MainView {
 
 	private Map<String, TabContent> tabContents = new HashMap<String, TabContent>();
 
-	public MainViewImpl() {
+	protected Map<String, Object> context;
+	
+	public MainViewImpl(Map<String, Object> context) {
 		super();
+		this.context = context;
 	}
 
 	@Override
