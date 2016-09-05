@@ -37,7 +37,9 @@ public class FirstPagePresenterImpl implements FirstPagePresenter, FirstPageView
 
 	private FirstPageView view;
 	private PresenterFactory presenterFactory;
-
+	private Presenter apres = null;
+	private Presenter lpres = null;
+	
 	public FirstPagePresenterImpl(Map<String, Object> context, FirstPageView view, PresenterFactory presenterFactory) {
 		super();
 		this.view = view;
@@ -61,6 +63,12 @@ public class FirstPagePresenterImpl implements FirstPagePresenter, FirstPageView
 		view.closeSubView();
 		// aus Edit-Presentern
 		loadFromModel();
+		
+		if (fromPresenter == apres) {
+			apres = null;
+		} else if (fromPresenter == lpres) {
+			lpres = null;
+		}
 	}
 
 	protected void loadFromModel() {
@@ -91,4 +99,12 @@ public class FirstPagePresenterImpl implements FirstPagePresenter, FirstPageView
 #end
 #end
 
+	@Override
+	public void onContextChange() {
+		if (apres != null) {
+			apres.onContextChange();
+		} else if (lpres != null) {
+			lpres.onContextChange();
+		}
+	}
 }

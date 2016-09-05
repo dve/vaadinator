@@ -26,5 +26,7 @@ public interface Presenter extends Serializable {
 	public void startPresenting();
 
 	public void returnToThisPresener(Presenter fromPresenter);
+	
+	public void onContextChange();
 
 }

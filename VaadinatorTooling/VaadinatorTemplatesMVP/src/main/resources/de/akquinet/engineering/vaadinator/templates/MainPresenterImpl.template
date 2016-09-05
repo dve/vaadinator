@@ -40,7 +40,11 @@ public class MainPresenterImpl implements MainPresenter {
 	
 	private MainView view;
 	private PresenterFactory presenterFactory;
-
+#foreach($bean in $common.beans)	
+#if($bean.displayed)
+	private ${bean.className}ListPresenter lpres${bean.className};
+#end
+#end
 	public MainPresenterImpl(Map<String, Object> context, MainView view, PresenterFactory presenterFactory) {
 		super();
 		this.view = view;
@@ -57,7 +61,7 @@ public class MainPresenterImpl implements MainPresenter {
 		view.initializeUi();
 	#foreach($bean in $common.beans)
 	#if($bean.displayed)
-		${bean.className}ListPresenter lpres${bean.className} = presenterFactory.create${bean.className}ListPresenter(this, new SubviewCapablePresenter() {
+		lpres${bean.className} = presenterFactory.create${bean.className}ListPresenter(this, new SubviewCapablePresenter() {
 			
 			/**
 			 * 
@@ -84,5 +88,13 @@ public class MainPresenterImpl implements MainPresenter {
 	public void returnToThisPresener(Presenter fromPresenter) {
 		// nichts zu tun
 	}
-
+	
+	@Override
+	public void onContextChange() {
+#foreach($bean in $common.beans)	
+#if($bean.displayed)
+		lpres${bean.className}.onContextChange();
+#end
+#end		
+	}
 }

@@ -41,6 +41,9 @@ public class ${bean.className}ListPresenterImpl implements ${bean.className}List
 	private ${bean.className}Service service;
 	private SubviewCapablePresenter subviewCapablePresenter;
 
+	private ${bean.className}ChangePresenter cpres = null;
+	private ${bean.className}AddPresenter apres = null;
+	
 	public ${bean.className}ListPresenterImpl(Map<String, Object> context, ${bean.className}ListView view, PresenterFactory presenterFactory, ${bean.className}Service service, SubviewCapablePresenter subviewCapablePresenter) {
 		super();
 		this.context = context;
@@ -72,6 +75,13 @@ public class ${bean.className}ListPresenterImpl implements ${bean.className}List
 		}
 		// from editing (there could be a change)
 		loadFromModel();
+		
+		if(fromPresenter == apres) {
+			apres = null;
+		}
+		else if(fromPresenter == cpres) {
+			cpres = null;
+		}
 	}
 
 	protected void loadFromModel() {
@@ -93,7 +103,7 @@ public class ${bean.className}ListPresenterImpl implements ${bean.className}List
 		if (newSel == null) {
 			return;
 		}
-		${bean.className}ChangePresenter cpres = presenterFactory.create${bean.className}ChangePresenter(this);
+		cpres = presenterFactory.create${bean.className}ChangePresenter(this);
 		cpres.set${bean.className}(newSel);
 		// if we have a subview capable presenter: take this one - otherwise try open a sub view (will accomodate both Desktop and TouchKit)
 		if (subviewCapablePresenter != null) {
@@ -106,7 +116,7 @@ public class ${bean.className}ListPresenterImpl implements ${bean.className}List
 
 	@Override
 	public void onAdd${bean.className}() {
-		${bean.className}AddPresenter apres = presenterFactory.create${bean.className}AddPresenter(this);
+		apres = presenterFactory.create${bean.className}AddPresenter(this);
 		// if we have a subview capable presenter: take this one - otherwise try open a sub view (will accomodate both Desktop and TouchKit)
 		if (subviewCapablePresenter != null) {
 			subviewCapablePresenter.setDetailView(apres.getView());
@@ -116,4 +126,13 @@ public class ${bean.className}ListPresenterImpl implements ${bean.className}List
 		apres.startPresenting();
 	}
 
+	@Override
+	public void onContextChange() {
+		if(apres != null) {
+			apres.onContextChange();
+		}
+		if(cpres != null) {
+			cpres.onContextChange();
+		}
+	}
 }

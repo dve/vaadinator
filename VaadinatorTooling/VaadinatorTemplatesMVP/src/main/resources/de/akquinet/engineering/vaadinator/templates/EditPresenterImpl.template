@@ -124,5 +124,9 @@ public abstract class ${bean.className}EditPresenterImpl implements ${bean.class
 			returnPresenter.returnToThisPresener(this);
 		}
 	}
+	
+	@Override
+	public void onContextChange() {
+	}
 
 }
