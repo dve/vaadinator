@@ -63,13 +63,17 @@ public class MainViewImpl extends CustomComponent implements MainView {
 
 	protected TabContent obtainTab(String identifier) {
 		if (!tabContents.containsKey(identifier)) {
-			TabContent tabContent = new TabContent();
+			TabContent tabContent = createTabContent();
 			tabContents.put(identifier, tabContent);
 			tabs.addTab(tabContent, obtainTabCaption(identifier));
 		}
 		return tabContents.get(identifier);
 	}
 
+	protected TabContent createTabContent() {
+		return new TabContentImpl();
+	}
+	
 	protected String obtainTabCaption(String identifier) {
 	#foreach($bean in $common.beans)
 	#if($bean.displayed)
@@ -84,13 +88,13 @@ public class MainViewImpl extends CustomComponent implements MainView {
 	@Override
 	public void setMasterView(String identifier, View view) {
 		Component newComp = view == null ? new Placeholder() : (Component) view.getComponent();
-		obtainTab(identifier).replaceLeftComponent(newComp);
+		obtainTab(identifier).replaceMasterComponent(newComp);
 	}
 
 	@Override
 	public void setDetailView(String identifier, View view) {
 		Component newComp = view == null ? new Placeholder() : (Component) view.getComponent();
-		obtainTab(identifier).replaceRightComponent(newComp);
+		obtainTab(identifier).replaceDetailComponent(newComp);
 	}
 
 	public class Placeholder extends Label {
@@ -102,7 +106,12 @@ public class MainViewImpl extends CustomComponent implements MainView {
 
 	}
 
-	public class TabContent extends HorizontalLayout {
+	public interface TabContent extends Component {
+		public void replaceMasterComponent(Component withComponent);
+		public void replaceDetailComponent(Component withComponent);
+	}
+	
+	public class TabContentImpl extends HorizontalLayout implements TabContent {
 
 		/**
 		 * 
@@ -112,19 +121,19 @@ public class MainViewImpl extends CustomComponent implements MainView {
 		private Component leftComponent = new Placeholder();
 		private Component rightComponent = new Placeholder();
 
-		public TabContent() {
+		public TabContentImpl() {
 			super();
 			setSizeFull();
 			addComponent(leftComponent);
 			addComponent(rightComponent);
 		}
 
-		public void replaceLeftComponent(Component withComponent) {
+		public void replaceMasterComponent(Component withComponent) {
 			replaceComponent(leftComponent, withComponent);
 			leftComponent = withComponent;
 		}
 
-		public void replaceRightComponent(Component withComponent) {
+		public void replaceDetailComponent(Component withComponent) {
 			replaceComponent(rightComponent, withComponent);
 			rightComponent = withComponent;
 		}
