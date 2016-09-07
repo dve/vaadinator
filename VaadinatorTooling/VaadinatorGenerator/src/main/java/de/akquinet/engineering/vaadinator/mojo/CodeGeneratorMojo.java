@@ -259,6 +259,9 @@ public class CodeGeneratorMojo extends AbstractMojo {
 				className + beanArtifact.getFileNameSuffix() + "Ex", ".java");
 		boolean exExists = exSourceFile.exists();
 		getLog().debug("Checking if " + exSourceFile + " exists: " + exExists);
+		if(exExists){
+			getLog().info(exSourceFile + " extists.");
+		}
 		return exExists;
 	}
 
