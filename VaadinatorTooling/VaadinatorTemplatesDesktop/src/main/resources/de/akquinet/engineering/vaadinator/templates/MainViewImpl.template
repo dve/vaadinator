@@ -27,8 +27,10 @@ import com.vaadin.ui.TabSheet;
 #parse("/de/akquinet/engineering/vaadinator/templates/bundle_includes.template")
 
 import ${common.basePackage}.ui.view.View;
+import ${common.basePackage}.ui.view.VaadinView;
+import ${common.basePackage}.ui.view.FieldInitializer;
 
-public class MainViewImpl extends CustomComponent implements MainView {
+public class MainViewImpl extends CustomComponent implements MainView, VaadinView {
 
 	/**
 	 * 
@@ -37,7 +39,7 @@ public class MainViewImpl extends CustomComponent implements MainView {
 
 	protected TabSheet tabs = new TabSheet();
 
-	private Map<String, TabContent> tabContents = new HashMap<String, TabContent>();
+	protected Map<String, TabContent> tabContents = new HashMap<String, TabContent>();
 
 	protected Map<String, Object> context;
 	
@@ -109,6 +111,8 @@ public class MainViewImpl extends CustomComponent implements MainView {
 	public interface TabContent extends Component {
 		public void replaceMasterComponent(Component withComponent);
 		public void replaceDetailComponent(Component withComponent);
+		public Component getMasterComponent();
+		public Component getDetailComponent();
 	}
 	
 	public class TabContentImpl extends HorizontalLayout implements TabContent {
@@ -128,16 +132,36 @@ public class MainViewImpl extends CustomComponent implements MainView {
 			addComponent(rightComponent);
 		}
 
+		@Override
 		public void replaceMasterComponent(Component withComponent) {
 			replaceComponent(leftComponent, withComponent);
 			leftComponent = withComponent;
 		}
 
+		@Override
 		public void replaceDetailComponent(Component withComponent) {
 			replaceComponent(rightComponent, withComponent);
 			rightComponent = withComponent;
 		}
 
+		@Override
+		public Component getMasterComponent() {
+			return leftComponent;
+		}
+
+		@Override
+		public Component getDetailComponent() {
+			return rightComponent;
+		}
 	}
 	
+	@Override
+	public void addFieldInitializer(FieldInitializer fieldInitializer) {
+		// not fields here	
+	}
+
+	@Override
+	public void buildLayout() {
+		// nothing to do here		
+	}
 }
