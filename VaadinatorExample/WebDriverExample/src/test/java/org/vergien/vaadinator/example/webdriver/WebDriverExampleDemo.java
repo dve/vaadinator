@@ -52,7 +52,8 @@ public class WebDriverExampleDemo extends AbstractTest {
 			AddressDaoPlain addressDaoPlain = new AddressDaoPlain(entityManagerFactory);
 			addressService = new AddressServicePlain(entityManagerFactory, addressDaoPlain);
 			
-			presenterFactory = new PresenterFactory(new HashMap<String, Object>(), new VaadinViewFactory(),
+			HashMap<String, Object> context = new HashMap<String, Object>();
+			presenterFactory = new PresenterFactory(context, new VaadinViewFactory(context),
 					addressService);
 		}
 		return presenterFactory;
