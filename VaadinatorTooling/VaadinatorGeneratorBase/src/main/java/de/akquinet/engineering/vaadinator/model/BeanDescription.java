@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import de.akquinet.engineering.vaadinator.annotations.Constants;
 
 public class BeanDescription {
@@ -324,7 +326,7 @@ public class BeanDescription {
 	}
 
 	public String getEffectiveCaption() {
-		if (getCaptionText() != null) {
+		if (StringUtils.isNotBlank(getCaptionText())) {
 			return getCaptionText();
 		}
 		return getClassName();

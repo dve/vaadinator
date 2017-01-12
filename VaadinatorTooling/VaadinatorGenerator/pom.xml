@@ -27,7 +27,25 @@ the License.
 		<artifactId>VaadinatorTooling</artifactId>
 		<version>0.20-SNAPSHOT</version>
 	</parent>
+	<properties>
+		<prism.directory>${project.build.directory}/generated-sources/prims</prism.directory>
+		 <com.jolira.hickory.version>1.0.0</com.jolira.hickory.version>
+		<org.eclipse.tycho.compiler-jdt.version>0.26.0</org.eclipse.tycho.compiler-jdt.version>
+	</properties>
 	<dependencies>
+	<dependency>
+            <groupId>com.jolira</groupId>
+            <artifactId>hickory</artifactId>
+            <scope>provided</scope>
+            <version>${com.jolira.hickory.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-compiler-jdt</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+            <version>${org.eclipse.tycho.compiler-jdt.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>de.akquinet.engineering.vaadin.vaadinator</groupId>
 			<artifactId>VaadinatorGeneratorBase</artifactId>
@@ -67,4 +85,59 @@ the License.
 			<version>2.6</version>
 		</dependency>		
 	</dependencies>
+	<build>
+		<plugins>
+		<plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <configuration>
+                    <defaultOutputDirectory>${prism.directory}</defaultOutputDirectory>
+                    <processors>
+                        <processor>net.java.dev.hickory.prism.internal.PrismGenerator
+                        </processor>
+                    </processors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.jolira</groupId>
+                        <artifactId>hickory</artifactId>
+                        <version>${com.jolira.hickory.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.tycho</groupId>
+                        <artifactId>tycho-compiler-jdt</artifactId>
+                        <version>${org.eclipse.tycho.compiler-jdt.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${prism.directory}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+           </plugins>
+	</build>
 </project>

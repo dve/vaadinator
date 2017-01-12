@@ -30,8 +30,12 @@ public @interface DisplayPropertySetting {
 
 	boolean exclude() default false;
 
+	@Deprecated
 	FieldType fieldType() default FieldType.TEXTFIELD;
 
+	Class<?> fieldClass() default Object.class;
+
+	@Deprecated
 	String customClassName() default "";
 
 	boolean customAuswahlAusListe() default false;
