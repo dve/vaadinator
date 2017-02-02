@@ -1,0 +1,13 @@
+desktop:
+  stage: build
+  script: "mvn install -Pdesktop,tomcat"
+
+touchkit:
+  stage: build 
+  script: "mvn install -Ptouchkit,tomcat"
+  
+before_script:
+  - mkdir -p /tmp/webdriverextensions-maven-plugin/cache
+  - mkdir -p /tmp/webdriverextensions-maven-plugin/drivers
+  - mkdir -p /tmp/webdriverextensions-maven-plugin/temp
+  
