@@ -83,10 +83,30 @@ the License.
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
-		</dependency>		
+		</dependency>	
+		<dependency>
+  			<groupId>com.google.testing.compile</groupId>
+  			<artifactId>compile-testing</artifactId>
+  			<version>0.10</version>
+  			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0-4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>          
+            <configuration>
+            <!-- Do not use annotation processors, since the on we provice is not compiled yet -->
+                        <compilerArgument>-proc:none</compilerArgument>
+                    </configuration>              
+		</plugin>
 		<plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>

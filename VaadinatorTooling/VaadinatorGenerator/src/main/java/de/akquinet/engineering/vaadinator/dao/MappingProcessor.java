@@ -2,7 +2,9 @@ package de.akquinet.engineering.vaadinator.dao;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -15,8 +17,11 @@ import javax.lang.model.util.ElementKindVisitor6;
 import javax.tools.Diagnostic.Kind;
 
 import de.akquinet.engineering.vaadinator.model.BeanDescription;
-@SupportedAnnotationTypes("de.akquinet.engineering.vaadinator.annotations.DisplayBean")
+
+@SupportedAnnotationTypes({ "de.akquinet.engineering.vaadinator.annotations.DisplayBean" })
 public class MappingProcessor extends AbstractProcessor {
+
+	private List<BeanDescription> beanDescriptions = new ArrayList<>();
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
@@ -25,8 +30,8 @@ public class MappingProcessor extends AbstractProcessor {
 			// process any mappers left over from previous rounds
 
 			// get and process any mappers from this round
-			Set<TypeElement> mappers = getGetDisplayBeans(annotations, roundEnvironment);
-			processDisplayBeanElements(mappers);
+			Set<TypeElement> displayBeans = getGetDisplayBeans(annotations, roundEnvironment);
+			processDisplayBeanElements(displayBeans);
 		}
 		return false;
 	}
@@ -45,14 +50,24 @@ public class MappingProcessor extends AbstractProcessor {
 
 	private void process(TypeElement displayBeanElement) {
 		DisplayBeanPrism displayBeanPrisim = DisplayBeanPrism.getInstanceOn(displayBeanElement);
-
 		BeanDescription beanDescription = new BeanDescription(displayBeanElement.getSimpleName().toString());
 		beanDescription.setBeanValidation(displayBeanPrisim.beanValidation());
 		beanDescription.setCaptionText(displayBeanPrisim.captionText());
 		beanDescription.setCaptionProp(displayBeanPrisim.captionProp());
 		beanDescription.setDisplayed(!displayBeanPrisim.ignore());
-		System.out.println(beanDescription);
-
+		beanDescription.setPckg(getPackageName(displayBeanElement));
+		if (displayBeanElement.getKind() == ElementKind.ENUM) {
+			beanDescription.setEnumeration(true);
+			EnumScanner enumScanner = new EnumScanner();
+			enumScanner.scan(displayBeanElement, beanDescription);
+			beanDescription.setDisplayed(false);
+		} else {
+			BeanScanner importScanner = new BeanScanner();
+			importScanner.setProcessingEnviroment(processingEnv);
+			importScanner.scan(displayBeanElement, beanDescription);
+			beanDescription.setImports(new ArrayList<>(importScanner.getImportedTypes()));
+		}
+		beanDescriptions.add(beanDescription);
 	}
 
 	private Set<TypeElement> getGetDisplayBeans(final Set<? extends TypeElement> annotations,
@@ -102,6 +117,11 @@ public class MappingProcessor extends AbstractProcessor {
 				return e;
 			}
 
+			@Override
+			public TypeElement visitTypeAsEnum(TypeElement e, Void p) {
+				return e;
+			}
+
 		}, null);
 	}
 
@@ -113,5 +133,21 @@ public class MappingProcessor extends AbstractProcessor {
 
 		processingEnv.getMessager().printMessage(Kind.ERROR,
 				"Internal error in the mapping processor: " + reportableStacktrace, element);
+	}
+
+	protected List<BeanDescription> getBeanDescriptions() {
+		return beanDescriptions;
+	}
+
+	/**
+	 * Returns the package name of the given element. NB: This method requires
+	 * the given element has the kind of {@link ElementKind#CLASS}.
+	 *
+	 * @param element
+	 * @return the package name
+	 * 
+	 */
+	public String getPackageName(Element element) {
+		return processingEnv.getElementUtils().getPackageOf(element).getQualifiedName().toString();
 	}
 }
