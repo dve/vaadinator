@@ -20,13 +20,14 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import com.github.javaparser.ParseException;
 
 import java.util.Collections;
 
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.javaparser.ParseException;
 
 import de.akquinet.engineering.vaadinator.annotations.Constants;
 import de.akquinet.engineering.vaadinator.annotations.FieldType;
