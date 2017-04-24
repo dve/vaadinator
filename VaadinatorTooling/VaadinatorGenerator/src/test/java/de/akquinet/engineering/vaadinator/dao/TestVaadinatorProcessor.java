@@ -21,10 +21,10 @@ import de.akquinet.engineering.vaadinator.annotations.FieldType;
 import de.akquinet.engineering.vaadinator.model.BeanDescription;
 import de.akquinet.engineering.vaadinator.model.ConstructorDescription;
 
-public class TestCompile {
+public class TestVaadinatorProcessor {
     @Test
     public void testEnumeration() {
-        MappingProcessor mappingProcessor = new MappingProcessor();
+        VaadinatorProcessor mappingProcessor = new VaadinatorProcessor();
         Compilation compilation = javac().withProcessors(mappingProcessor)
                 .compile(JavaFileObjects.forResource(
                         "de/akquinet/engineering/vaadinator/example/address/model/Anreden.java"));
@@ -55,7 +55,7 @@ public class TestCompile {
 
     @Test
     public void test() {
-        MappingProcessor mappingProcessor = new MappingProcessor();
+        VaadinatorProcessor mappingProcessor = new VaadinatorProcessor();
         Compilation compilation = javac().withProcessors(mappingProcessor)
                 .compile(JavaFileObjects.forResource(
                         "de/akquinet/engineering/vaadinator/example/address/model/Address.java"));

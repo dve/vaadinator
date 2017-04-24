@@ -20,7 +20,7 @@ import de.akquinet.engineering.vaadinator.model.BeanDescription;
 
 @SupportedAnnotationTypes({
         "de.akquinet.engineering.vaadinator.annotations.DisplayBean" })
-public class MappingProcessor extends AbstractProcessor {
+public class VaadinatorProcessor extends AbstractProcessor {
 
     private List<BeanDescription> beanDescriptions = new ArrayList<>();
 
