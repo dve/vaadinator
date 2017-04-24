@@ -10,20 +10,22 @@ import de.akquinet.engineering.vaadinator.model.BeanDescription;
 import de.akquinet.engineering.vaadinator.model.EnumValueDescription;
 
 public class EnumScanner extends ElementScanner6<Void, BeanDescription> {
-	@Override
-	public Void visitVariable(VariableElement e, BeanDescription p) {
+    @Override
+    public Void visitVariable(VariableElement e, BeanDescription p) {
 
-		if (e.getKind() == ElementKind.ENUM_CONSTANT) {
-			EnumValueDescription enumValue = new EnumValueDescription(p, e.getSimpleName().toString());
-			DisplayEnumPrism displayEnumPrism = DisplayEnumPrism.getInstanceOn(e);
-			if (displayEnumPrism != null) {
-				if (StringUtils.isNotBlank(displayEnumPrism.captionText())) {
-					enumValue.setCaptionText(displayEnumPrism.captionText());
-				}
-			}
+        if (e.getKind() == ElementKind.ENUM_CONSTANT) {
+            EnumValueDescription enumValue = new EnumValueDescription(p,
+                    e.getSimpleName().toString());
+            DisplayEnumPrism displayEnumPrism = DisplayEnumPrism
+                    .getInstanceOn(e);
+            if (displayEnumPrism != null) {
+                if (StringUtils.isNotBlank(displayEnumPrism.captionText())) {
+                    enumValue.setCaptionText(displayEnumPrism.captionText());
+                }
+            }
 
-			p.addEnumValue(enumValue);
-		}
-		return super.visitVariable(e, p);
-	}
+            p.addEnumValue(enumValue);
+        }
+        return super.visitVariable(e, p);
+    }
 }
