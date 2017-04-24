@@ -33,6 +33,12 @@ the License.
 		<org.eclipse.tycho.compiler-jdt.version>0.26.0</org.eclipse.tycho.compiler-jdt.version>
 	</properties>
 	<dependencies>
+	
+		<dependency>
+   			<groupId>com.google.auto</groupId>
+    		<artifactId>auto-common</artifactId>
+    		<version>0.8</version>
+		</dependency>	
 	<dependency>
             <groupId>com.jolira</groupId>
             <artifactId>hickory</artifactId>
