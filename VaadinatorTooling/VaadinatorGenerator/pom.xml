@@ -39,6 +39,12 @@ the License.
     		<artifactId>auto-common</artifactId>
     		<version>0.8</version>
 		</dependency>	
+		 <dependency>
+    <groupId>com.google.auto.service</groupId>
+    <artifactId>auto-service</artifactId>
+    <version>1.0-rc3</version>
+    <optional>true</optional>
+  </dependency>
 	<dependency>
             <groupId>com.jolira</groupId>
             <artifactId>hickory</artifactId>

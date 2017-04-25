@@ -9,6 +9,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementScanner6;
@@ -105,8 +106,15 @@ public class BeanScanner extends ElementScanner6<Void, BeanDescription> {
                     .getInstanceOn(e);
             if (displayPropertyPrism != null) {
                 System.out.println(e + " annotated field");
-                String propertyClassName = processingEnvironment.getTypeUtils()
-                        .asElement(e.asType()).getSimpleName().toString();
+                String propertyClassName;
+                if (e.asType().getKind().isPrimitive()) {
+                    PrimitiveType pt = processingEnvironment.getTypeUtils()
+                            .getPrimitiveType(e.asType().getKind());
+                    propertyClassName = pt.toString();
+                } else {
+                    propertyClassName = processingEnvironment.getTypeUtils()
+                            .asElement(e.asType()).getSimpleName().toString();
+                }
                 String propertyName = e.getSimpleName().toString();
                 createPropertyDescriptions(p, displayPropertyPrism,
                         propertyClassName, propertyName);

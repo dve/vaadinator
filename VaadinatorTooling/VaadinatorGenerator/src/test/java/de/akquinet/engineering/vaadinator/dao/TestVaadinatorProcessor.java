@@ -144,7 +144,7 @@ public class TestVaadinatorProcessor {
         assertNotNull(desc.getDisplayProfile("gibtesnicht"));
         assertNotNull(desc.getDisplayProfile("std"));
         assertEquals(
-                "\"anrede\", \"vorname\", \"nachname\", \"email\", \"geburtsdatum\"",
+                "\"anrede\", \"vorname\", \"nachname\", \"numberCats\", \"email\", \"geburtsdatum\"",
                 desc.getDisplayProfile("std")
                         .getSortedPropertiesInProfileForDetailStr());
         assertEquals("\"name\", \"email\"", desc.getDisplayProfile("std")
@@ -158,7 +158,7 @@ public class TestVaadinatorProcessor {
         assertTrue(desc.getDisplayProfile("std").getSectionsInProfile()
                 .toString().contains("Mehr Infos"));
         // remove id, it was only mapped
-        assertEquals(6, desc.getProperties().size());
+        assertEquals(7, desc.getProperties().size());
         assertNull(desc.getProperty("gibtesnicht"));
 
         assertNotNull(desc.getProperty("anrede"));

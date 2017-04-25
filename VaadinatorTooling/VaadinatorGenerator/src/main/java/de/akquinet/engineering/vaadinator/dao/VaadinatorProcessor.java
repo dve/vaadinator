@@ -6,16 +6,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.processing.Processor;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
 import com.google.auto.common.BasicAnnotationProcessor;
+import com.google.auto.service.AutoService;
 import com.google.common.collect.SetMultimap;
 
 import de.akquinet.engineering.vaadinator.annotations.DisplayBean;
 import de.akquinet.engineering.vaadinator.model.BeanDescription;
 
+@AutoService(Processor.class)
+@SupportedAnnotationTypes({
+        "de.akquinet.engineering.vaadinator.annotations.DisplayBean" })
 public class VaadinatorProcessor extends BasicAnnotationProcessor {
     private List<BeanDescription> beanDescriptions = new ArrayList<>();
 
@@ -26,6 +33,16 @@ public class VaadinatorProcessor extends BasicAnnotationProcessor {
         return steps;
     }
 
+    @Override
+    protected void postRound(RoundEnvironment roundEnv) {
+        if (roundEnv.processingOver()) {
+            System.out.println("Generating code for these DisplayBeans:");
+            for (BeanDescription bd : beanDescriptions) {
+                System.out.println("\t" + bd.getClassName());
+            }
+        }
+    }
+
     public List<BeanDescription> getBeanDescriptions() {
         return beanDescriptions;
     }
@@ -33,10 +50,11 @@ public class VaadinatorProcessor extends BasicAnnotationProcessor {
     public class VaadinatorProccessingStep implements ProcessingStep {
 
         @Override
-        public Set<? extends Class<? extends Annotation>> annotations() {
-            Set<Class> anno = new HashSet<>();
-            anno.add(DisplayBean.class);
-            return (Set<? extends Class<? extends Annotation>>) anno;
+        public Set annotations() {
+            Set anno = new HashSet<>();
+            Class<? extends Annotation> a = DisplayBean.class;
+            anno.add(a);
+            return anno;
         }
 
         @Override

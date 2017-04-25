@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import de.akquinet.engineering.vaadinator.annotations.DisplayBean;
 import de.akquinet.engineering.vaadinator.annotations.DisplayProperty;
@@ -49,7 +51,10 @@ public class Address implements Serializable {
 	private String email;
 	@Temporal(TemporalType.DATE)
 	private Date geburtsdatum;
-
+	@DisplayProperty(converterClassName = "com.vaadin.data.util.converter.StringToIntegerConverter", captionText = "# Katzen")
+        @Max(9)
+        @Min(0)
+        private int numberCats = 0;
 	public Anreden getAnrede() {
 		return anrede;
 	}
