@@ -1,26 +1,31 @@
 package de.akquinet.engineering.vaadinator.dao;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.processing.Processor;
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic.Kind;
+import javax.tools.FileObject;
+import javax.tools.StandardLocation;
 
 import com.google.auto.common.BasicAnnotationProcessor;
-import com.google.auto.service.AutoService;
 import com.google.common.collect.SetMultimap;
 
 import de.akquinet.engineering.vaadinator.annotations.DisplayBean;
 import de.akquinet.engineering.vaadinator.model.BeanDescription;
 
-@AutoService(Processor.class)
+@SupportedOptions({ "debug" })
 @SupportedAnnotationTypes({
         "de.akquinet.engineering.vaadinator.annotations.DisplayBean" })
 public class VaadinatorProcessor extends BasicAnnotationProcessor {
@@ -36,13 +41,37 @@ public class VaadinatorProcessor extends BasicAnnotationProcessor {
     @Override
     protected void postRound(RoundEnvironment roundEnv) {
         if (roundEnv.processingOver()) {
-            System.out.println("Generating code for these DisplayBeans:");
+            log("Generating code for these DisplayBeans:");
             for (BeanDescription bd : beanDescriptions) {
-                System.out.println("\t" + bd.getClassName());
+                log("\t" + bd.getClassName());
+                writeFilesPerClass(bd);
             }
         }
     }
 
+    private void writeFilesPerClass(BeanDescription bd) {
+        Filer filer = processingEnv.getFiler();
+        String file = "TEST/" + bd.getClassName();
+        try {
+            FileObject existingFile = filer
+                    .createResource(StandardLocation.SOURCE_OUTPUT, "", file);
+            System.out.println(existingFile.toUri().toString());
+            Writer os = existingFile.openWriter();
+
+            os.write("Bla bla Bla");
+            os.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    private void log(String msg) {
+        if (processingEnv.getOptions().containsKey("debug")) {
+            processingEnv.getMessager().printMessage(Kind.NOTE, msg);
+        }
+    }
     public List<BeanDescription> getBeanDescriptions() {
         return beanDescriptions;
     }
@@ -68,6 +97,9 @@ public class VaadinatorProcessor extends BasicAnnotationProcessor {
         }
 
         private void process(TypeElement displayBeanElement) {
+            processingEnv.getMessager().printMessage(Kind.NOTE,
+                    "Proccesing " + displayBeanElement.getSimpleName(),
+                    displayBeanElement);
             DisplayBeanPrism displayBeanPrisim = DisplayBeanPrism
                     .getInstanceOn(displayBeanElement);
             BeanDescription beanDescription = new BeanDescription(

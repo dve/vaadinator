@@ -26,6 +26,7 @@ public class TestVaadinatorProcessor {
     public void testEnumeration() {
         VaadinatorProcessor mappingProcessor = new VaadinatorProcessor();
         Compilation compilation = javac().withProcessors(mappingProcessor)
+                .withOptions("-Adebug=true")
                 .compile(JavaFileObjects.forResource(
                         "de/akquinet/engineering/vaadinator/example/address/model/Anreden.java"));
         assertThat(compilation).succeeded();
